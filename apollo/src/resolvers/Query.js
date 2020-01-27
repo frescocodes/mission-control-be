@@ -3,29 +3,29 @@
 
 const info = () => `Hello World`;
 
-const programs = (parent, args, context) => {
+const programs = (_parent, _args, context) => {
   const res = context.prisma.programs();
   return res;
 };
 
-const products = (parent, args, context) => {
+const products = (_parent, _args, context) => {
   const res = context.prisma.products();
   return res;
 };
 
-const projects = (parent, args, context) => {
+const projects = (_parent, _args, context) => {
   const res = context.prisma.projects();
   return res;
 };
 
-const persons = (parent, args, context) => {
+const persons = (_parent, _args, context) => {
   const res = context.prisma.persons();
   return res;
 };
 
-const me = (parent, args, context) => context.user;
+const me = (_parent, _args, context) => context.user;
 
-const notes = (parent, args, context) => {
+const notes = (_parent, _args, context) => {
   const res = context.prisma.notes();
   return res;
 };

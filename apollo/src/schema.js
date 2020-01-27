@@ -19,7 +19,7 @@ const typeDefs = gql`
     addProjectSectionLead(id: ID!, email: String!): Person!
     addProjectTeamLead(id: ID!, email: String!): Person!
     addProjectMember(id: ID!, email: String!): Person!
-    createNote(id: ID! ): Note
+    createNote(id: ID!): Note
   }
 
   type Program {
@@ -37,7 +37,6 @@ const typeDefs = gql`
     createdAt: String!
     updatedAt: String!
     projects: [Project!]!
-    
   }
 
   type Project {
