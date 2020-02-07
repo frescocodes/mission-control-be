@@ -47,9 +47,7 @@ The Apollo instance is listining on port 8000, and an authenticated prisma playg
 
 - [AWS Apollo Stage Console](https://console.aws.amazon.com/ecs/home?region=us-east-1#/clusters/mission-control-stage/services)
 - Apollo Server is the best way to quickly build a production-ready, self-documenting API for GraphQL clients, using data from any source.
-
 - Apollo communicates directly with the front-end to act as a bridge between the graphQL client and the prisma ORM data layer.
-
 - Documentation can be found [here](https://www.apollographql.com/docs/apollo-server/getting-started/)
 
 ### Prisma
@@ -66,55 +64,44 @@ The Apollo instance is listining on port 8000, and an authenticated prisma playg
 
 ```graphql
 type Program {
-  id: ID!
-  name: String!
-  createdAt: String!
-  updatedAt: String!
+  id: ID! @id
+  name: String! @unique
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   products: [Product!]!
 }
-
 type Product {
-  id: ID!
+  id: ID! @id
   name: String!
   program: Program!
-  createdAt: String!
-  updatedAt: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   projects: [Project!]!
 }
-
 type Project {
-  id: ID!
+  id: ID! @id
   name: String!
   product: Product!
-  status: Boolean!
-  sectionLead: Person
-  teamLead: Person
-  projectManagers: [Person!]!
-  team: [Person!]!
-  notes: [Note]
-  createdAt: String!
-  updatedAt: String!
+  status: Boolean @default(value: false)
+  sectionLead: Person @relation(link: INLINE, name: "SectionLead")
+  teamLead: Person @relation(link: INLINE, name: "TeamLead")
+  projectManagers: [Person!]! @relation(name: "ProjectManager")
+  team: [Person!]! @relation(name: "Team")
+  notes: [Note!]!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
-
-type Person {
-  id: ID!
-  name: String!
-  email: String!
-  role: Role!
-  manages: [Project!]!
-  notes: [Note]
-  team: Project
-  sl: [Project!]!
-  tl: Project
+type Note {
+  id: ID! @id
+  topic: String!
+  content: String!
+  author: Person! @relation(name: "NoteAuthor")
+  attendedBy: [Person!]! @relation(name: "NoteAttendee")
+  project: Project!
+  rating: Int!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
-
-type User {
-  id: ID!
-  email: String!
-  claims: [String!]!
-  projects: [Project!]!
-}
-
 enum Role {
   SL
   TL
@@ -123,15 +110,18 @@ enum Role {
   UX
   PM
 }
-
-type Note {
-  id: ID!
-  topic: String!
-  content: String!
-  author: Person!
-  attendedBy: [Person!]!
-  createdAt: String!
-  updatedAt: String!
+type Person {
+  id: ID! @id
+  name: String!
+  email: String! @unique
+  role: Role!
+  authored: [Note!]! @relation(name: "NoteAuthor")
+  attended: [Note!]! @relation(name: "NoteAttendee")
+  manages: [Project!]! @relation(name: "ProjectManager")
+  team: Project @relation(name: "Team")
+  sl: [Project!]! @relation(name: "SectionLead")
+  tl: Project @relation(name: "TeamLead")
+  avatar: String
 }
 ```
 
@@ -152,19 +142,22 @@ const context = async ({ req }) => {
 
 ## Environment Variables
 
-In order for the app to function correctly, the user must set up their own environment variables.
+In order for the app to function correctly, the user must set up their own environment variables. Create a .env file that includes the following:
 
-create a .env file that includes the following:
+- APPLICATION_NAME - determines which application is used in the
+- ENVIRONMENT_NAME - determines which environment for the application
 
-- OAUTH_TOKEN_ENDPOINT
-- OAUTH_CLIENT_ID
-- APPLICATION_NAME
-- ENVIRONMENT_NAME
-- TEST_OAUTH_CLIENT_ID
-- TEST_OAUTH_CLIENT_SECRET
-- PRISMA_MANAGEMENT_API_SECRET
-- PRISMA_ENDPOINT
-- PRISMA_SECRET
+- OAUTH_TOKEN_ENDPOINT -
+- OAUTH_CLIENT_ID -
+
+- TEST_OAUTH_CLIENT_ID - optional test account
+- TEST_OAUTH_CLIENT_SECRET - optional auth test account, note that this doesn't actually use the same authorization flow, this is just for quick testing
+
+- PRISMA_MANAGEMENT_API_SECRET - The secret used when managing any prisma service via CLI eg `prisma deploy` or `prisma seed`
+- PRISMA_ENDPOINT - The endpoint of the Prisma service you are trying to manage
+- PRISMA_SECRET - Secret used to send requests to the Prisma service, this must be included in the Authorization headers either in each request Apollo sends, the playground of the Prisma service, or Prisma admin view of the Prisma service
+
+- SENDGRID_API_KEY - The key sent back to the SendGrid API to send a notification email to all project managers
 
 ## Contributing
 
@@ -185,24 +178,6 @@ Please note we have a [code of conduct](./code_of_conduct.md). Please follow it 
 
 We would love to hear from you about new features which would improve this app and further the aims of our project. Please provide as much detail and information as possible to show us why you think your new feature should be implemented.
 
-### Pull Requests
-
-If you have developed a patch, bug fix, or new feature that would improve this app, please submit a pull request. It is best to communicate your ideas with the developers first before investing a great deal of time into a pull request to ensure that it will mesh smoothly with the project.
-
-Remember that this project is licensed under the MIT license, and by submitting a pull request, you agree that your work will be, too.
-
-#### Pull Request Guidelines
-
-- Ensure any install or build dependencies are removed before the end of the layer when doing a build.
-- Update the README.md with details of changes to the interface, including new plist variables, exposed ports, useful file locations and container parameters.
-- Ensure that your code conforms to our existing code conventions and test coverage.
-- Include the relevant issue number, if applicable.
-- You may merge the Pull Request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the second reviewer to merge it for you.
-
 ### Attribution
 
 These contribution guidelines have been adapted from [this template](https://gist.github.com/PurpleBooth/b24679402957c63ec426).
-
-## Documentation
-
-See [Coming Soon: Front end edition]() for details on the frontend of our project.
