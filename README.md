@@ -1,10 +1,10 @@
-# Mission Control API Documentation
+<center>
+
+# Mission Control
 
 ![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
 ![React](https://img.shields.io/badge/react-16.12.0-blue)
 [![code style: prettier](https://img.shields.io/badge/code%20style-prettier-ff69b4)](https://github.com/prettier/prettier)
-
-</center>
 
 |                                          [Kevin Afable](https://github.com/KAfable)                                          |                                          [Nicholas Gebhart](http://github.com/gebhartn)                                           |                                             [Dakotah Huey](https://github.com/frescocodes)                                             |
 | :--------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------: |
@@ -17,6 +17,8 @@
 |           [<img src="https://ca.slack-edge.com/T4JUEB3ME-ULXJ07DJS-d95403332534-512" width = "200" />](https://github.com/)           |       [<img src="https://ca.slack-edge.com/T4JUEB3ME-ULXALGWPR-90c177b51aa7-512" width = "200" />](https://github.com/)       |   [<img src="https://ca.slack-edge.com/T4JUEB3ME-UHXNFRBFE-b1accb251340-512" width = "200" />](https://github.com/)   |
 |                        [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/tonyrkovar)                        |                  [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/roywakumelojr)                   |              [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/tommycoleman87)              |
 | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/tony-kovar-772295136/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/roywakumelojr) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://github.com/tommycoleman87) |
+
+</center>
 
 ## Getting started
 
@@ -43,6 +45,7 @@ The Apollo instance is listining on port 8000, and an authenticated prisma playg
 
 ### Apollo Server
 
+- [AWS Apollo Stage Console](https://console.aws.amazon.com/ecs/home?region=us-east-1#/clusters/mission-control-stage/services)
 - Apollo Server is the best way to quickly build a production-ready, self-documenting API for GraphQL clients, using data from any source.
 
 - Apollo communicates directly with the front-end to act as a bridge between the graphQL client and the prisma ORM data layer.
