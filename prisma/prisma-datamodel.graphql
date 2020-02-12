@@ -60,13 +60,17 @@ type Person {
   tl: Project @relation(name: "TeamLead")
   avatar: String
 }
+
+# Specific Type definition for our StarWar object,
+#     if we wanted to save anything to our db.
 type StarWar {
-  id: ID! @id
-  name: String!
-  height: String!
+  id: ID! @id       # primary keys have this @id annotation
+  name: String!     # Anything with a  !  is required
+  height: String    # ← So, this field isn't required
   mass: String!
 }
 
+# Type definition for Fire
 type Fire {
   id: ID! @id
   type: String!
