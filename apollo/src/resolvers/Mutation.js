@@ -14,6 +14,10 @@ const createProgram = (parent, args, context) => {
   return program;
 };
 
+const addToSlack = async (parent, args, context) => {
+  
+}
+
 // Create a new product, takes a string and a program ID
 const createProduct = (parent, args, context) => {
   const product = context.prisma.createProduct({
@@ -97,6 +101,7 @@ const createNote = async (parent, args, context) => {
 // Takes in the same args are create note AND a specific note ID
 // uses note id to pull attendees to remove them and then pushes new data
 const updateNote = async (parent, args, context) => {
+
   const { topic, content, attendedBy, rating, id } = args;
 
   // pulls the attendee data on the note where: id

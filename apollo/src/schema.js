@@ -11,6 +11,10 @@ const typeDefs = gql`
     me: User!
     notes(orderBy: NoteOrderByInput): [Note!]!
     note(id: ID!): Note!
+    starwar(id: ID!): StarWar!
+    schemes: [Scheme]
+    scheme(id: ID!): Scheme
+    fires: [Fire!]!
   }
 
   type Mutation {
@@ -66,10 +70,44 @@ const typeDefs = gql`
     teamLead: Person
     projectManagers: [Person!]!
     team: [Person!]!
+    charater(id: String): Blargh!
     notes(orderBy: NoteOrderByInput): [Note]
     createdAt: String!
     updatedAt: String!
   }
+
+  type Blargh {
+    id: ID!
+    name: String!
+    height: String!
+    project: Project!
+    hair_color: String
+  }
+
+  type StarWar {
+    name: String!
+    height: String!
+    mass: String!
+    films: [String]
+  }
+
+  type Scheme {
+    id: ID!
+    name: String!
+    steps: [Step]
+  }
+
+  type Step {
+    id: ID!
+    description: String!
+  }
+
+  type Fire {
+    id: ID!
+    type: String!
+    location: String!
+  }
+
 
   type Person {
     id: ID!

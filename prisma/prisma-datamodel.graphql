@@ -23,9 +23,11 @@ type Project {
   projectManagers: [Person!]! @relation(name: "ProjectManager")
   team: [Person!]! @relation(name: "Team")
   notes: [Note!]!
+  urls: [GithubInfo!]! @relation(name: "")
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
+
 type Note {
   id: ID! @id
   topic: String!
@@ -57,4 +59,16 @@ type Person {
   sl: [Project!]! @relation(name: "SectionLead")
   tl: Project @relation(name: "TeamLead")
   avatar: String
+}
+type StarWar {
+  id: ID! @id
+  name: String!
+  height: String!
+  mass: String!
+}
+
+type Fire {
+  id: ID! @id
+  type: String!
+  location: String!
 }

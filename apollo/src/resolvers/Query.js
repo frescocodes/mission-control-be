@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 // Queries must be defined to return fields of the same type
 // See the Query field in the type definitions for examples
 
@@ -15,12 +17,35 @@ const products = (parent, args, context) => {
 
 const projects = (parent, args, context) => {
   const res = context.prisma.projects();
+  console.log(res);
   return res;
 };
 
 const project = (parent, args, context) => {
   const { id } = args;
   const res = context.prisma.project({ id });
+  return res;
+};
+
+const starwar = async (parent, args, context) => {
+  try {
+    const res = await axios.get(`https://swapi.co/api/people/${args.id}`);
+    console.log(res.data);
+    return res.data;
+  } catch (e) {
+    throw new Error('Internal Servor Error x_x');
+  }
+};
+
+const codeClimate = (parent, args, context) => {
+  axios.get("urlhere")
+    .then(res => res.data)
+    .catch(err => {throw new Error(err)})
+}
+
+const fires = (parent, args, context) => {
+  const res = context.prisma.fires();
+  console.log(res);
   return res;
 };
 
@@ -53,4 +78,6 @@ module.exports = {
   me,
   note,
   notes,
+  starwar,
+  fires,
 };
