@@ -187,3 +187,5 @@ These contribution guidelines have been adapted from [this template](https://gis
 ## Documentation
 
 See [Coming Soon: Front end edition]() for details on the frontend of our project.
+
+miguel
